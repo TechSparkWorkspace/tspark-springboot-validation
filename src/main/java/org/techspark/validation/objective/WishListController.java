@@ -3,10 +3,8 @@ package org.techspark.validation.objective;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.techspark.validation.objective.dto.WishRequest;
 
 
 @RestController
@@ -25,6 +23,11 @@ public class WishListController {
             @Size(min = 2, max = 4, message = "Year must be between 2 and 4 characters")
             String year) {
         return String.format("Fetching wishes for year : %s", year);
+    }
+
+    @PostMapping("/api/wish")
+    public String createWish(@RequestBody @Validated WishRequest wishRequest) {
+        return String.format("Wish created: %s, Category: %s", wishRequest.getTitle(), wishRequest.getCategory());
     }
 
 }
